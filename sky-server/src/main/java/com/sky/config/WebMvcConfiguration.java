@@ -74,6 +74,13 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
+    /**
+     * @author Mingkai Feng
+     * @date 2024/2/1 17:41
+     * @Description ToDo 扩展 Spring MVC 框架的消息转换器
+     * @param converters
+
+     */
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         // 创建一个消息转换器对象

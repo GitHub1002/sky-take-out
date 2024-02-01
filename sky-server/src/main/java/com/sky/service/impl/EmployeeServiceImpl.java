@@ -103,4 +103,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageResult pageResult = new PageResult(page.getTotal(), page.getResult());
         return pageResult;
     }
+
+    /**
+     * @author Mingkai Feng
+     * @date 2024/2/1 19:50
+     * @Description ToDo   员工启用/禁用
+     * @param status
+     * @param id
+
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
+    }
 }
