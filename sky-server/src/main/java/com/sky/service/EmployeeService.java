@@ -35,4 +35,21 @@ public interface EmployeeService {
      * @return
      */
     void startOrStop(Integer status, Long id);
+
+    /**
+     * @author Mingkai Feng
+     * @date 2024/2/2 14:03
+     * @Description ToDo  根据id查询员工信息
+     * @param id
+
+     */
+    Employee getById(Integer id);
+
+    /**
+     * @author Mingkai Feng
+     * @date 2024/2/2 14:03
+     * @Description ToDo  更新员工信息
+     * @param employeeDTO
+     */
+    void update(EmployeeDTO employeeDTO);
 }
