@@ -12,9 +12,13 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.vo.DishVO;
 
+import java.util.List;
+
 public interface DishService {
 
     public void addDishWithFlavor(DishDTO dishDTO);
 
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    void deleteBatch(List<Long> ids);
 }
