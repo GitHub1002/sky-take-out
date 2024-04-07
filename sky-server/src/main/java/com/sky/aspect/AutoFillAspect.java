@@ -1,5 +1,5 @@
 /**
- * @Description TODO
+ * @Description 自定义切面，实现自动填充功能
  * @Classname AutoFillAspect
  * @Date 2024/4/1 10:29
  * @Created by Mingkai Feng
@@ -12,7 +12,6 @@ import com.sky.context.BaseContext;
 import com.sky.enumeration.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,13 +21,6 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
-import static com.sky.enumeration.OperationType.INSERT;
-
-/**
- * @author Mingkai Feng
- * @date 2024/4/1 10:37
- * @Description ToDo   自定义切面，实现自动填充功能
- */
 @Aspect
 @Component
 @Slf4j
@@ -37,7 +29,7 @@ public class AutoFillAspect {
     /**
      * @author Mingkai Feng
      * @date 2024/4/1 10:41
-     * @Description ToDo 定义切点，指定需要拦截的方法
+     * @Description 定义切点，指定需要拦截的方法
      */
     // 这里execution中第一个 * 是返回类型，指返回值是所有的类型
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill) ")

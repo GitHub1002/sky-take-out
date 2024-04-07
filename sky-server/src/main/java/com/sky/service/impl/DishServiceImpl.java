@@ -1,5 +1,5 @@
 /**
- * @Description TODO
+ * @Description
  * @Classname DishServiceImpl
  * @Date 2024/4/2 16:54
  * @Created by Mingkai Feng
@@ -45,7 +45,7 @@ public class DishServiceImpl implements DishService {
     /**
      * @author Mingkai Feng
      * @date 2024/4/2 17:12
-     * @Description ToDo 新增菜品和对应口味
+     * @Description 新增菜品和对应口味
      * @param dishDTO
      */
     @Override
@@ -73,7 +73,7 @@ public class DishServiceImpl implements DishService {
     /**
      * @author Mingkai Feng
      * @date 2024/4/4 18:42
-     * @Description ToDo    菜品分页查询
+     * @Description   菜品分页查询
      * @param dishPageQueryDTO
      * @return PageResult
      */
@@ -88,7 +88,7 @@ public class DishServiceImpl implements DishService {
     /**
      * @author Mingkai Feng
      * @date 2024/4/5 14:57
-     * @Description ToDo    批量删除菜品
+     * @Description   批量删除菜品
      * @param ids
      */
     @Override
@@ -115,5 +115,49 @@ public class DishServiceImpl implements DishService {
         dishMapper.deleteByIds(ids);
         // 根据菜品id批量删除关联的口味数据
         dishFlavorMapper.deleteByDishIds(ids);
+    }
+
+    /**
+     * @author Mingkai Feng
+     * @date 2024/4/7 10:51
+     * @Description   根据菜品id查询菜品信息和对应的口味信息
+     * @param id
+     * @return DishVO
+     */
+    @Override
+    public DishVO getByIdWithFlavor(Long id) {
+        // 1. 查询菜品信息
+        Dish dish = dishMapper.getById(id);
+        // 2. 查询菜品对应的口味信息
+        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
+        // 3. 封装数据
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish, dishVO);
+        dishVO.setFlavors(flavors);
+        return dishVO;
+    }
+
+    /**
+     * @Description 根据菜品id查询菜品信息和对应的口味信息
+     * @author Mingkai Feng
+     * @date 2024/4/7 14:14
+     * @param dishDTO
+     */
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        // 1. 更新菜品基本信息
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+        dishMapper.update(dish);
+        // 2. 删除对应口味信息
+        dishFlavorMapper.deleteByDishId(dishDTO.getId());
+        // 3. 添加新的口味信息
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors != null && flavors.size() > 0) {
+            for (DishFlavor flavor : flavors) {
+                flavor.setDishId(dishDTO.getId());
+            }
+            dishFlavorMapper.insertBatch(flavors);
+        }
     }
 }
